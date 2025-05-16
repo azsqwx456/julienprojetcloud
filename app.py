@@ -25,16 +25,16 @@ def download_if_not_exists(url, local_path):
             f.write(r.content)
 
 # Liens Google Drive fournis par l'utilisateur
-MODELE_URL = 'https://www.dropbox.com/scl/fi/rpwlhn5mc75rkmpxero5a/modele_pipeline.pkl?rlkey=64ddc2syjz99lpmdmkloq7clz&dl=1'
-DATAFRAME_URL = 'https://www.dropbox.com/scl/fi/rpwlhn5mc75rkmpxero5a/dataframeP7.pkl?rlkey=64ddc2syjz99lpmdmkloq7clz&dl=1'
+MODELE_URL = 'https://www.dropbox.com/scl/fi/d7yaanf8s2slu94go3k9v/modele_pipeline.pkl?rlkey=7brg4jqcg33u07go45spqzpyu&dl=1'
+DATAFRAME_URL = 'https://www.dropbox.com/scl/fi/tx7bjqkcea4artjw28jl6/dataframeP7_light.pkl?rlkey=7z053k7bdlijn8upehjtp10gl&dl=1'
 
 # Téléchargement automatique
 download_if_not_exists(MODELE_URL, 'modele_pipeline.pkl')
-download_if_not_exists(DATAFRAME_URL, 'dataframeP7.pkl')
+download_if_not_exists(DATAFRAME_URL, 'dataframeP7_light.pkl')
 
 # Charger les données et le modèle au démarrage
 try:
-    df = pd.read_pickle("dataframeP7.pkl")
+    df = pd.read_pickle("dataframeP7_light.pkl")
     df_reel = df[df["TARGET"].isna()]
     pipeline = joblib.load("modele_pipeline.pkl")
     scaler = pipeline.named_steps['scaler']
