@@ -14,26 +14,17 @@ CORS(app)  # Activer CORS pour permettre les requêtes depuis Streamlit
 # Créer le dossier data s'il n'existe pas
 os.makedirs('data', exist_ok=True)
 
-# Charger les données et le modèle
-@app.before_first_request
-def load_model_and_data():
-    global df, df_reel, pipeline, scaler, model, explainer
-    try:
-        # Charger les données
-        df = pd.read_pickle("dataframeP7.pkl")
-        df_reel = df[df["TARGET"].isna()]
-        
-        # Charger le modèle
-        pipeline = joblib.load("modele_pipeline.pkl")
-        scaler = pipeline.named_steps['scaler']
-        model = pipeline.named_steps['classifier']
-        
-        # Initialiser l'explainer SHAP
-        explainer = shap.TreeExplainer(model)
-        
-        print("Modèle et données chargés avec succès")
-    except Exception as e:
-        print(f"Erreur lors du chargement du modèle ou des données: {str(e)}")
+# Charger les données et le modèle au démarrage
+try:
+    df = pd.read_pickle("dataframeP7.pkl")
+    df_reel = df[df["TARGET"].isna()]
+    pipeline = joblib.load("modele_pipeline.pkl")
+    scaler = pipeline.named_steps['scaler']
+    model = pipeline.named_steps['classifier']
+    explainer = shap.TreeExplainer(model)
+    print("Modèle et données chargés avec succès")
+except Exception as e:
+    print(f"Erreur lors du chargement du modèle ou des données: {str(e)}")
 
 # Charger le modèle
 pipeline = joblib.load("modele_pipeline.pkl")
@@ -86,9 +77,6 @@ def predict():
 
 # Lancer l'API
 if __name__ == "__main__":
-    # Charger le modèle et les données au démarrage
-    load_model_and_data()
-    
     # Utiliser le port défini par l'environnement ou 5000 par défaut
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=False, host="0.0.0.0", port=port)
