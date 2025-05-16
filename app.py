@@ -2,6 +2,7 @@ import os
 import joblib
 import pandas as pd
 import shap
+import requests
 
 from flask import Flask, jsonify, request, make_response
 from sklearn.preprocessing import StandardScaler
@@ -13,6 +14,23 @@ CORS(app)  # Activer CORS pour permettre les requêtes depuis Streamlit
 
 # Créer le dossier data s'il n'existe pas
 os.makedirs('data', exist_ok=True)
+
+# Télécharger les fichiers depuis Google Drive si besoin
+
+def download_if_not_exists(url, local_path):
+    if not os.path.exists(local_path):
+        print(f"Téléchargement de {local_path} depuis Google Drive...")
+        r = requests.get(url)
+        with open(local_path, 'wb') as f:
+            f.write(r.content)
+
+# Liens Google Drive fournis par l'utilisateur
+MODELE_URL = 'https://drive.google.com/uc?export=download&id=1Z0OLu4K_LJmcyKBn_pInJ0IdE4l9ULyw'
+DATAFRAME_URL = 'https://drive.google.com/uc?export=download&id=161nkCpuTYejDn-f9MoWd-cqE6y_rDacc'
+
+# Téléchargement automatique
+download_if_not_exists(MODELE_URL, 'modele_pipeline.pkl')
+download_if_not_exists(DATAFRAME_URL, 'dataframeP7.pkl')
 
 # Charger les données et le modèle au démarrage
 try:
