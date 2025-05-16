@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
-import shap
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -20,9 +19,16 @@ API_URL = st.sidebar.text_input(
 # Chargement des données
 @st.cache_data
 def load_data():
-    return pd.read_pickle("data/dataframeP7.pkl")
+    # Tente de charger le fichier léger à la racine
+    try:
+        return pd.read_pickle("dataframeP7_light.pkl")
+    except Exception as e:
+        st.error(f"Impossible de charger le fichier dataframeP7_light.pkl : {e}")
+        return pd.DataFrame()
 
 df = load_data()
+if df.empty:
+    st.stop()
 df_clients = df[df["TARGET"].isna()]
 id_list = df_clients["SK_ID_CURR"].sort_values().unique()
 
