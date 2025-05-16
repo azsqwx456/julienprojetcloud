@@ -1,0 +1,16 @@
+# Fichiers volumineux
+*.pkl
+
+# Dossiers
+__pycache__/
+.ipynb_checkpoints/
+data/
+
+# Environnement
+.env
+venv/
+.venv/
+env/
+
+# Autres
+.DS_Store
