@@ -25,8 +25,8 @@ def download_if_not_exists(url, local_path):
             f.write(r.content)
 
 # Liens Google Drive fournis par l'utilisateur
-MODELE_URL = 'https://drive.google.com/uc?export=download&id=1Z0OLu4K_LJmcyKBn_pInJ0IdE4l9ULyw'
-DATAFRAME_URL = 'https://drive.google.com/uc?export=download&id=161nkCpuTYejDn-f9MoWd-cqE6y_rDacc'
+MODELE_URL = 'https://www.dropbox.com/scl/fi/rpwlhn5mc75rkmpxero5a/modele_pipeline.pkl?rlkey=64ddc2syjz99lpmdmkloq7clz&dl=1'
+DATAFRAME_URL = 'https://www.dropbox.com/scl/fi/rpwlhn5mc75rkmpxero5a/dataframeP7.pkl?rlkey=64ddc2syjz99lpmdmkloq7clz&dl=1'
 
 # Téléchargement automatique
 download_if_not_exists(MODELE_URL, 'modele_pipeline.pkl')
