@@ -1,4 +1,6 @@
 # Fichiers volumineux
+!api_flask/dataframeP7_light.pkl
+!streamlit_app/dataframeP7_light.pkl
 dataframeP7_light.pkl
 *.pkl
 
